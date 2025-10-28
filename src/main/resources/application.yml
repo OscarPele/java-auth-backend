@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Site_DB
+    username: ${DB_USER:}
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.default_schema: Site_schema
+      hibernate.hbm2ddl.create_namespaces: true
+    open-in-view: false
+    show-sql: false
+
+  mail:
+    host: smtp.gmail.com
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+
+security:
+  permit-all: /auth/login,/auth/register,/auth/forgot-password,/auth/reset-password,/auth/verify-email,/auth/verify-email/request,/actuator/health,/actuator/info,/v3/api-docs/**,/swagger-ui.html,/swagger-ui/**
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET}
+  mail:
+    from: ${MAIL_FROM:${MAIL_USERNAME}}
+    replyTo: ${MAIL_REPLY_TO:}
