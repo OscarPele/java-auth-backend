@@ -26,7 +26,7 @@ spring:
       mail.smtp.starttls.required: true
 
 security:
-  permit-all: /auth/login,/auth/register,/auth/forgot-password,/auth/reset-password,/auth/verify-email,/auth/verify-email/request,/actuator/health,/actuator/info,/v3/api-docs/**,/swagger-ui.html,/swagger-ui/**
+  permit-all: /auth/login,/auth/register,/auth/forgot-password,/auth/reset-password,/auth/verify-email,/auth/verify-email/request,/actuator/health,/actuator/info
 
 app:
   jwt:

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hs.site.auth.token.RefreshTokenService;
 import com.hs.site.auth.user.User;
 import com.hs.site.auth.user.UserService;
 
@@ -21,17 +20,14 @@ public class PasswordResetService {
 
     private final PasswordResetTokenRepository repo;     // lo creamos después
     private final UserService userService;
-    private final RefreshTokenService refreshTokenService;
     private final int expirationMinutes;
     private final SecureRandom random = new SecureRandom();
 
     public PasswordResetService(PasswordResetTokenRepository repo,
                                 UserService userService,
-                                RefreshTokenService refreshTokenService,
                                 @Value("${app.password-reset.expiration-minutes:30}") int expirationMinutes) {
         this.repo = repo;
         this.userService = userService;
-        this.refreshTokenService = refreshTokenService;
         this.expirationMinutes = expirationMinutes;
     }
 
@@ -68,10 +64,9 @@ public class PasswordResetService {
         User u = prt.getUser();
         userService.forceChangePassword(u.getId(), newPassword);
 
-        // Marcar token como usado y limpiar sesiones
+        // Marcar token como usado
         prt.setUsed(true);
         repo.save(prt);
-        refreshTokenService.revokeAllByUserId(u.getId());
     }
 
     // --- utilidades privadas ---

@@ -1,6 +1,5 @@
 package com.hs.site.auth.verification;
 
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ public class EmailVerificationController {
         this.users = users;
     }
 
-    @Operation(summary = "Solicitar/reenviar verificación (si existe y no verificado). Responde 204 siempre.")
     @PostMapping("/verify-email/request")
     public ResponseEntity<Void> request(@RequestBody VerifyEmailRequest body) {
         users.findByEmailIgnoreCase(body.email()).ifPresent(u -> {
